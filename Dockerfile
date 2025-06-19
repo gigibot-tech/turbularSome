@@ -71,10 +71,10 @@ FROM base as prod
 
 # Switch to non-root user
 USER turbular
+# Create startup script# ───── prod stage ──────────────────────────────────────────────                        
 
-# Create startup script
-COPY scripts/start-prod.sh /usr/src/server/start-prod.sh
-RUN chmod +x /usr/src/server/start-prod.sh
+# copy the start script owned by turbular and already executable
+COPY --chown=turbular:turbular --chmod=0755 scripts/start-prod.sh /usr/src/server/start-prod.sh
 
 # Run with gunicorn in production
 CMD ["/usr/src/server/start-prod.sh"]
